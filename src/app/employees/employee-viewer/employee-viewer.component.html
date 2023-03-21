@@ -1,0 +1,10 @@
+<section class="card">
+  <div class="card-content">
+    <div class="card-title">Employee Details</div>
+    <app-employee-details
+      [employee]="(employee | async) ?? undefined"
+    ></app-employee-details>
+    <hr />
+    <a routerLink="/employees">Back to list</a>
+  </div>
+</section>
