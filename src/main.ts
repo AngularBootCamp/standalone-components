@@ -1,23 +1,15 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+// https://github.com/stackblitz/core/issues/2366
+import 'zone.js'; // Avoid error in StackBlitz
+import { provideHttpClient } from '@angular/common/http';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter, withRouterConfig } from '@angular/router';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import { AppComponent } from './app/app.component';
+import { routes, config } from './app/app.routes';
 
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .then(ref => {
-    // For fuller StackBlitz support:
-    // Ensure Angular destroys itself on hot reloads.
-    if ((window as any).ngRef) {
-      (window as any).ngRef.destroy();
-    }
-    (window as any).ngRef = ref;
-
-    // Otherwise, log the boot error
-  })
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    provideRouter(routes, withRouterConfig(config))
+  ]
+});
